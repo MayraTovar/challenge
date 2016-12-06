@@ -1,0 +1,219 @@
+/* 
+    Document   : job_manager.css
+    Created on : 22/09/2011, 03:50:27 PM
+    Version 1
+    Author: Daniel Aranda
+    Version 2
+    Author: Osvaldo Mercado <osvaldo.mercado@ge.com>
+*/
+
+*
+{
+    font-family: Trebusch, Arial;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    background-position: center;
+
+}
+
+#content {
+    position: absolute;
+    margin: 10px 10px 0 10px;
+    left: 10%;
+
+}
+root { 
+    display: block;
+}
+div.warning
+{
+    float: left;
+    width:300px;
+    height: 15px;
+    margin: 5px 8px 0 0;
+    padding: 8px;
+    -moz-border-radius: 15px;
+    border-radius: 10px;
+    background-color: #FFCC00;
+    font-size: 12px;
+}
+div.logEntry
+{
+    font-size: 11pt;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #D7E8F1;
+    display: block;
+    padding: 10px;
+    margin: 10px 10px;
+    float: left;
+    clear: both;
+}
+
+div.logWarningEntry
+{
+    font-size: 11pt;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #FFCC33;
+    display: block;
+    padding: 10px;
+    margin: 10px 10px;
+    float: left;
+    clear: both;
+}
+
+div.logErrorEntry
+{
+    font-size: 11pt;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #FFCC33;
+    display: block;
+    padding: 10px;
+    margin: 10px 10px;
+    float: left;
+    clear: both;
+}
+
+div.timestamp
+{
+    float: left;
+    width: 190px;
+    font-weight:bold;
+    border-right: 1px solid #333333;
+    margin-right: 20px;
+}
+div.message
+{
+    float: left;
+    width: 500px;
+    margin-right: 20px;
+}
+div.priority
+{
+    display: none;
+}
+div.priorityName
+{
+    float: left;
+    width: 100px;
+    font-weight: bold;
+}
+h2
+{
+    margin: 20px 0 0 20px;
+}
+div.jobs-container
+{
+    float: right;
+    max-width: 1100px;
+    padding: 0 20px 20px 20px;
+}
+div.jobs-warning-container
+{
+    position: absolute;
+    max-width: 300px;
+    padding: 0 0 0 700px;
+    margin-top: -80px;
+    display:  block;
+}
+div.job
+{
+    float: left;
+    width:400px;
+    height: 140px;
+    margin: 20px 20px 0 0;
+    padding: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #C2D4DC;
+}
+div.job-running
+{
+    float: left;
+    width:400px;
+    height: 140px;
+    margin: 20px 20px 0 0;
+    padding: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #66CC33;
+}
+div.job-name
+{
+    font-size: 14pt;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+a.run-link
+{
+    background-color: #7FA7BF;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 6px 20px 0 0;
+    padding: 6px;
+    display: block;
+    float: left;
+    text-align: center;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    text-decoration:none;
+}
+a.run-link#run
+{
+    width: 50px;
+}
+a.run-link#analyze
+{
+    width: 100px;
+}
+p.advice
+{
+    margin: 0 0 0 20px;
+    color: #df0000;
+    font-weight: bold;
+    font-size: 12px;
+}
+div#job-history-container
+{
+    margin-left: 50px;
+}
+table#job-history th
+{
+    background-color: #B6CFDD;
+    padding: 10px;
+}
+table#job-history td
+{
+    text-align: center;
+    padding: 10px 0;
+}
+table#job-history tr.alternative
+{
+    background: #E7EFF3;
+}
+#job-history-summary
+{
+    float: left;
+    width:400px;
+    margin: 20px 20px 0 0;
+    padding: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #DFF0FA;
+}
+#job-history-output
+{
+    float: left;
+    width:800px;
+    margin: 20px 20px 0 0;
+    padding: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #E2EBF1;
+}
