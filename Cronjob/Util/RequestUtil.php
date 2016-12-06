@@ -24,8 +24,8 @@ class RequestUtil {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $psm_url);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_PROXY, 'cis-cinci-pitc-ssow.proxy.corporate.ge.com');
-        curl_setopt($ch, CURLOPT_PROXYPORT, 80);
+        //curl_setopt($ch, CURLOPT_PROXY, 'cis-cinci-pitc-ssow.proxy.corporate.ge.com'); //please uncomment if you need to set up proxy
+        //curl_setopt($ch, CURLOPT_PROXYPORT, 80); //please uncomment if you need to set up proxy
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         if(!empty($pao_headers)) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $pao_headers);
