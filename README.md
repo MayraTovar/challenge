@@ -1,6 +1,6 @@
 # Config
 
-1. Install XAMP it should be configured to load Apache and MySQL, once is installed please make sure Apache and MySQL are started
+1. Install XAMPP it should be configured to load Apache and MySQL, once is installed please make sure Apache and MySQL are started
 
 2. Install MySQL Workbench
 
