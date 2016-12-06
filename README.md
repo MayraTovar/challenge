@@ -22,8 +22,11 @@
 
 9. Load Historical Data
     Go to: http://localhost/challenge-master/Cronjob/Manager.php
-  9.1 On Manager please Run "Team Job"
-  9.2 To Load Historical Data please Run "Schedule Job"
+    
+    9.1. On Manager please Run "Team Job"
+
+    9.2 To Load Historical Data please Run "Schedule Job"
+    
     9.2.1 A new Tab will be open, please add to the URL Query: &historicalMode=true
     Should looks like this: http://localhost/challenge-master/Cronjob/Manager.php?cronjob=Schedule&historicalMode=true
     
