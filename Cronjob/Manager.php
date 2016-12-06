@@ -1,14 +1,7 @@
 <?php
 /*
  *  ================================================================================
- *  @copyright(C) 2012 General Electric. ALL RIGHTS RESERVED.
- * 
- *  This file contains proprietary and GE CONFIDENTIAL Information.
- *  Use, disclosure or reproduction is prohibited.
- * 
  *  File:  Manager.php
- *  Created On: 12-Nov-2012 20:31:57
- *  @author: osvaldo.mercado <osvaldo.mercado@ge.com>
  *  @version 1.0.0
  *  @category Cronjob
  *  @link http://framework.zend.com/manual/2.0/en/modules/zend.log.overview.html     
@@ -25,15 +18,10 @@ include_once '../bootstrap.php';
 use \Exception,
     Zend\Log\Logger,
     Zend\Db\Sql\Sql,
-    Zend\Db\Sql\Expression,
     Zend\Db\Sql\Predicate\Operator,
     Application\Core\Db\Db,
-    Application\Core\Environment\Environment,
     Application\Model\DbTable,
     Application\Model\DbGenericField,
-    Application\Model\UserRoles,
-    Application\Util\MailUtil,
-    Application\Util\DataValidator,
     Cronjob\Model\ActivityStatus,
     Cronjob\Model\Status,
     Cronjob\Core\Core,
@@ -42,7 +30,6 @@ use \Exception,
 /**
  * Description of Manager
  *
- * @author osvaldo.mercado
  */
 class Manager extends Core
 {
@@ -174,9 +161,6 @@ class Manager extends Core
 
         if (empty($cronjobActivity)) {
             $this->_log->write(\Zend\Log\Logger::CRIT, "Unable to get the status for cronjob, quitting. ");
-
-            $emails = self::getAlertContacts(array("sso"));
-            $mail = MailUtil::send($emails, $class . " cronjob unexpected runtime error   - " . Environment::getName(), "The " . $class . " cronjob suffered an unexpected runtime error:" . $this->_logText);
         }
 
         if ($cronjobActivity == ActivityStatus::RUNNING) {
@@ -219,11 +203,6 @@ class Manager extends Core
 
             $runStatus = RunStatus::FAIL;
             $errorLog = true;
-
-            # Send alert email
-            $emails = self::getAlertContacts(array("sso"));
-            $mail = MailUtil::send($emails, "{$class} Cronjob has crashed! - " . Environment::getName(), "The {$class} cronjob has crashed terribly!. The error message is: " . $e->getMessage() . ". \n"
-                            . "It might also help to read this: " . $e->getPrevious());
         }
 
         $errorMsg = $errorLog === true ? 'with errors' : 'succesfully';
@@ -237,14 +216,6 @@ class Manager extends Core
         // Trigger alert if needed
         if (true === $this->_getAlertStatus($class, $runStatus)) {
             $this->_log->write(\Zend\Log\Logger::INFO, 'Alert sent, cronjob changed status. <br>');
-            # Send alert email     
-            try {
-                $emails = self::getAlertContacts(array("sso"));
-                $mail = MailUtil::send($emails, "{$class} Cronjob run was a {$runStatus}  - " . Environment::getName(), "The {$class} cronjob has changed status from the previous run, it is now  {$runStatus}.");
-            } catch (Exception $e) {
-                $this->_log->write(\Zend\Log\Logger::WARN, 'Unable to send notification email due to ' . $e->getMessage());
-                $this->_log->write(\Zend\Log\Logger::INFO, Environment::getName() . "The {$class} cronjob has changed status from the previous run, it is now  {$runStatus}");
-            }
         }
 
         // Set overall run stats
@@ -254,55 +225,11 @@ class Manager extends Core
         // Store historical log
         $dateTimeEnd = new \DateTime();
         $dateTimeEnd = $dateTimeEnd->format('Y-m-d H:i:s');
-        $this->_addLog($cronjobId, $dateTimeStart, $dateTimeEnd, $this->_log->logText, $totalTime, $runStatus);
-        // Destroy the log
         $this->_log = null;
 
 
 
         unset($cronjob);
-    }
-
-    /**
-     * By default, devs need to be alerted in case anything wrong happens.
-     * @todo Extend so that it's dynamic who can get alerts
-     * 
-     * @param array $pao_property Properties to retun
-     * @return Zend\Db results
-     */
-    public static function getAlertContacts($pao_property)
-    {
-        $sql = new Sql(Db::getCurrent());
-        $select = $sql->select()
-                ->from(array("tu" => DbTable::TABLE_USER))
-                ->where(array("tu.user_role_id" => UserRoles::DEVELOPER,
-            "tu.email_alerts" => "Y",
-            "tu.status" => Status::ACTIVE));
-
-        if (DataValidator::isArrayAndNotEmpty($pao_property)) {
-            $select->columns($pao_property);
-        }
-
-        $stmt = $sql->prepareStatementForSqlObject($select);
-        return $stmt->execute()->getResource()->fetchAll(\PDO::FETCH_COLUMN);
-    }
-
-    /**
-     * 
-     * @param int $pim_cronjobId The id of the cronjob
-     * @param string $psm_timeStart Datetime start
-     * @param string $psm_timeEnd Datetime end
-     * @param string $log The log to be stored
-     * @param string $runStatus The status of the run
-     */
-    private function _addLog($pim_cronjobId, $psm_timeStart, $psm_timeEnd, $log, $psm_duration, $runStatus)
-    {
-        $sql = new Sql($this->_db);
-        $insert = $sql->insert(\Application\Model\DbTable::TABLE_LOG_CRONJOB)
-                ->columns(array("cronjob_id", "date_start", "date_end", "log", "duration", "date_loaded", "status_run"))
-                ->values(array($pim_cronjobId, $psm_timeStart, $psm_timeEnd, $log, $psm_duration, new Expression("NOW()"), $runStatus));
-        $stmt = $sql->prepareStatementForSqlObject($insert);
-        $stmt->execute();
     }
 
     /**
@@ -438,20 +365,6 @@ class Manager extends Core
                     <div class="job-status">time running: <strong>' . $diff->d . " days, " . $diff->h . " hours and " . $diff->i . " mins" . '</strong></div>
                 </div>
                 ';
-                #TODO: add force stop button
-                if (($diff->h >= 1) || ($diff->d >= 1)) { #If cronjob has been running over an hour, then probably it got stuck   
-                    $emails = self::getAlertContacts(array("sso"));
-                    $mail = MailUtil::send($emails, "{$row['name']} Cronjob got stuck! - " 
-                   	. Environment::getName(), "The {$row['name']} cronjob has been running since {$row['datetime_start']} and is likely to be stuck. \n"
-                    . "It has already passed " 
-					. $diff->d 
-					. " days, " 
-					. $diff->h 
-					. " hours and " 
-					. $diff->i
-                    . " mins since it began, you might want to check on it."
-					);
-                }
             } else {
 
                 if ($row['status_run'] == 'FAIL') {

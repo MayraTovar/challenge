@@ -30,7 +30,7 @@ class Team {
         $select = $db->select()->from(array('t' => DbTable::TABLE_TEAM))
                 ->where(array('t.teamId' => $pim_teamID));
         $stmt = $db->prepareStatementForSqlObject($select);
-        return $stmt->execute()->getResource()->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->execute()->getResource()->fetch(\PDO::FETCH_ASSOC);
     }
 
 }

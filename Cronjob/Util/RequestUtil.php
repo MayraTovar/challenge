@@ -35,7 +35,6 @@ class RequestUtil {
         if($info['http_code'] != 200){
             throw new \Exception("HTTP ERROR: ". $info['http_code']);
         }
-        print_r($data);
         curl_close($ch);
         return $data;
     }

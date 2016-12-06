@@ -11,7 +11,7 @@ namespace Application\Model;
 class DbTable {
     const TABLE_EVENT = 'event';
     const TABLE_TEAM = 'team';
-    const TABLE_MATCH_EVENT_TEAM = 'match_event_team';
+    const TABLE_CRONJOB = 'cronjob';
 
 }
 

@@ -18,8 +18,10 @@ use Zend\Db\Sql\Sql;
 class Event {
 
     function __construct() {
-        
+
+
     }
+    
     public function getbyFilter($pam_filter) {
         $response = array();
         $db = new Sql(Db::getCurrent());
@@ -31,15 +33,23 @@ class Event {
             foreach ($result as $value) {
                 $teamHomeData = Team::getbyId($value['home_team_id']);
                 $teamAwayData = Team::getbyId($value['away_team_id']);
-                $value['HomeTeamName'] = $teamHomeData[0]['name'];
-                $value['HomeTeamKey'] = $teamHomeData[0]['abbreviation'];
-                $value['AwayTeamName'] = $teamAwayData[0]['name'];
-                $value['AwayTeamKey'] = $teamAwayData[0]['abbreviation'];
+                $value['HomeTeamName'] = $teamHomeData['name'];
+                $value['HomeTeamKey'] = $teamHomeData['abbreviation'];
+                $value['AwayTeamName'] = $teamAwayData['name'];
+                $value['AwayTeamKey'] = $teamAwayData['abbreviation'];
                 $response[] = $value;
             }
         }
         return $response;
     }
 
-}
+    public function getWeeks() {
+        $db = new Sql(Db::getCurrent());
+        $select = $db->select()->from(array('e' => DbTable::TABLE_EVENT))
+                ->columns(array('week'))
+                ->group(array('week'));
+        $stmt = $db->prepareStatementForSqlObject($select);
+        return $stmt->execute()->getResource()->fetchAll(\PDO::FETCH_COLUMN);
+    }
 
+}
