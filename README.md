@@ -1,6 +1,6 @@
 # Config
 
-1. Intall XAMP
+1. Intall XAMP it should be onfigurated to load Apache and MySQL, once is installed please make sure Apache and MySQL are started
 2. Install MySQL Workbench
 3. Create Database schema
 3.1 Create a new Localhost conection on MySQL Connections:
