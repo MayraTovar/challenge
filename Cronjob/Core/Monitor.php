@@ -1,15 +1,5 @@
 <?php
  /** 
-   * @copyright © 2010 General Electric. ALL RIGHTS RESERVED.
-   *
-   * This file contains proprietary and GE CONFIDENTIAL Information.
-   *
-   * Use, disclosure or reproduction is prohibited.
-   *
-   * Filename: Manager.php
-   * Created on Thu Aug 17 16:32:56 CDT 2010
-   *
-   * @author daniel.aranda@ge.com
    * @version 1.0
    */
 

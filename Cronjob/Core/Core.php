@@ -2,14 +2,7 @@
 
 /*
  *  ================================================================================
- *  @copyright(C) 2012 General Electric. ALL RIGHTS RESERVED.
- * 
- *  This file contains proprietary and GE CONFIDENTIAL Information.
- *  Use, disclosure or reproduction is prohibited.
- * 
  *  File:  Core.php
- *  Created On: 06-Dec-2012 11:18:26
- *  @author: osvaldo.mercado <osvaldo.mercado@ge.com>
  *  @version 1.0.0
  *  @category Core
  *  @link     
@@ -22,7 +15,6 @@ namespace Cronjob\Core;
 /**
  * Description of Core
  *
- * @author osvaldo.mercado
  */
 class Core {
 

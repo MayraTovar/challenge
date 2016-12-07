@@ -2,14 +2,8 @@
 
 /*
  *  ================================================================================
- *  @copyright(C) 2012 General Electric. ALL RIGHTS RESERVED.
- * 
- *  This file contains proprietary and GE CONFIDENTIAL Information.
- *  Use, disclosure or reproduction is prohibited.
  * 
  *  File:  Log.php
- *  Created On: 19-Dec-2012 11:25:19
- *  @author: osvaldo.mercado <osvaldo.mercado@ge.com>
  *  @version 1.0.0
  *  @category 
  *  @link     
